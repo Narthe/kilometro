@@ -14,5 +14,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_search">Search</string>
     <string name="action_example">Action example</string>
+    <string name="title_activity_add_run">AddRunActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
