@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class AddRunActivity extends ActionBarActivity {
+public class AddCourseActivity extends ActionBarActivity {
 
     Button addButton;
     EditText lastRecordEdit;
@@ -19,7 +19,7 @@ public class AddRunActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_run);
+        setContentView(R.layout.activity_add_course);
         this.initWidgets();
         this.initEvents();
     }
@@ -58,8 +58,8 @@ public class AddRunActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.v("last record : ", AddRunActivity.this.lastRecordEdit.getText().toString());
-                        Log.v("new record : ", AddRunActivity.this.newRecordEdit.getText().toString());
+                        Log.v("last record : ", AddCourseActivity.this.lastRecordEdit.getText().toString());
+                        Log.v("new record : ", AddCourseActivity.this.newRecordEdit.getText().toString());
                     }
                 }
         );

@@ -27,7 +27,7 @@
                 android:value="narthe.compteur_km.MainActivity" />
         </activity>
         <activity
-            android:name=".AddRunActivity"
+            android:name=".AddCourseActivity"
             android:label="@string/title_activity_add_run"
             android:parentActivityName=".MainActivity" >
             <meta-data
