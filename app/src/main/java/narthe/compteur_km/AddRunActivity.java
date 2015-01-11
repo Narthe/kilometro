@@ -20,7 +20,8 @@ public class AddRunActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_run);
-
+        this.initWidgets();
+        this.initEvents();
     }
 
 
@@ -53,8 +54,6 @@ public class AddRunActivity extends ActionBarActivity {
     }
 
     public void initEvents(){
-
-
         this.addButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
