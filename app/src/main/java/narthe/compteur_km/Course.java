@@ -6,17 +6,31 @@ import java.util.Date;
  * Created by narthe on 11/01/2015.
  */
 public class Course {
+    private int id;
     private int start;
     private int end;
     private int distance;
     private Date date;
 
-    public Course(int start, int end, int distance, Date date) {
+    public Course() {}
+
+    public Course(int id, int start, int end, int distance, Date date) {
+        this.id = id;
         this.start = start;
         this.end = end;
         this.distance = distance;
         this.date = date;
     }
+
+    public Course(int start, int end, int distance, Date date) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.distance = distance;
+        this.date = date;
+    }
+
+    public int getId() { return id; }
 
     public int getStart() {
         return start;
