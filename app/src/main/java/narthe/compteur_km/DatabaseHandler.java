@@ -166,11 +166,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // updating row
         return db.update(COURSES_TABLE, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(course.getID()) });
+                new String[] { String.valueOf(course.getId()) });
     }
 
     // Deleting single course
     public void deleteCourse(Course course) {
-
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(COURSES_TABLE, KEY_ID + " = ?",
+                new String[] { String.valueOf(course.getId()) });
+        db.close();
     }
 }
