@@ -14,19 +14,18 @@ public class Course {
 
     public Course() {}
 
-    public Course(int id, int start, int end, int distance, Date date) {
+    public Course(int id, int start, int end, Date date) {
         this.id = id;
         this.start = start;
         this.end = end;
-        this.distance = distance;
+        this.distance = end-start;
         this.date = date;
     }
 
-    public Course(int start, int end, int distance, Date date) {
-        this.id = id;
+    public Course(int start, int end, Date date) {
         this.start = start;
         this.end = end;
-        this.distance = distance;
+        this.distance = end-start;
         this.date = date;
     }
 

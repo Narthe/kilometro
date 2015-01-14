@@ -9,12 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Date;
+import java.util.List;
+
 
 public class AddCourseActivity extends ActionBarActivity {
 
     Button addButton;
     EditText lastRecordEdit;
     EditText newRecordEdit;
+    static DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,7 @@ public class AddCourseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_course);
         this.initWidgets();
         this.initEvents();
+        this.db = new DatabaseHandler(this);
     }
 
 
@@ -58,8 +63,28 @@ public class AddCourseActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.v("last record : ", AddCourseActivity.this.lastRecordEdit.getText().toString());
-                        Log.v("new record : ", AddCourseActivity.this.newRecordEdit.getText().toString());
+                        String start_str = AddCourseActivity.this.lastRecordEdit.getText().toString();
+                        String end_str = AddCourseActivity.this.newRecordEdit.getText().toString();
+                        Integer start = Integer.parseInt(start_str);
+                        Integer end = Integer.parseInt(end_str);
+                        if(end > start) {
+                            Log.v("last record : ", start_str);
+                            Log.v("new record : ", end_str);
+
+                            Course course = new Course(start, end, new Date());
+                            System.out.println(course.toString());
+                            AddCourseActivity.db.addCourse(course);
+
+                            //List<Course> courses = db.getAllCourses();
+
+                            //for (Course c : courses) {
+                                //System.out.println(cn.toString());
+                            //}
+                        }
+                        else
+                        {
+                            System.out.println("Compteur d'arrivée inférieur au compteur de départ");
+                        }
                     }
                 }
         );

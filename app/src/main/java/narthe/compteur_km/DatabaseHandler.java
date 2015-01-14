@@ -102,7 +102,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Course course = new Course(Integer.parseInt(cursor.getString(0)), //id
                                    Integer.parseInt(cursor.getString(1)), //start
                                    Integer.parseInt(cursor.getString(2)), //end
-                                   Integer.parseInt(cursor.getString(3)), //distance
                                    date);                                 //date
         // return contact
         return course;
