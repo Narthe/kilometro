@@ -16,5 +16,6 @@
     <string name="action_example">Action example</string>
     <string name="title_activity_add_run">AddRunActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_course_list_view">CourseListViewActivity</string>
 
 </resources>
