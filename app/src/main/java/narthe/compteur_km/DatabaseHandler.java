@@ -140,6 +140,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return courseList;
     }
 
+    public List<Course> getCoursesByMonth(Enum month) {
+        //"SELECT  * FROM " + COURSES_TABLE WHERE date
+    }
+
     // Getting courses Count
     public int getCoursesCount() {
         String countQuery = "SELECT  * FROM " + COURSES_TABLE;
