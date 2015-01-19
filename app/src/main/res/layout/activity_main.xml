@@ -5,19 +5,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:orientation="horizontal">
-
-    <EditText
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:id="@+id/edit_message"
-        android:hint="@string/edit_message" />
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_send"
-        android:id="@+id/button"
-        android:onClick="sendMessage"/>
+        android:text="Ajouter"
+        android:id="@+id/add_course_button"
+        android:onClick="addCourse"
+        android:layout_weight="0.13" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liste"
+        android:id="@+id/list_courses_button"
+        android:onClick="listCourses"
+        android:layout_weight="0.13" />
+
 </LinearLayout>
