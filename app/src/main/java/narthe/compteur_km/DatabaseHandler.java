@@ -140,8 +140,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return courseList;
     }
 
-    public List<Course> getCoursesByMonth(Enum month) {
-        //"SELECT  * FROM " + COURSES_TABLE WHERE date
+    public ArrayList<Course> getCoursesByMonth(Integer month) {
+        ArrayList<Course> courseList = new ArrayList<Course>();
+
+        String coursesByMonthQuery = "SELECT  * FROM " + COURSES_TABLE + " WHERE strftime('%m', date) = " + String.format("%01d", month);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                String date_str = cursor.getString(3);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date date = new Date();
+                try {
+                    date = sdf.parse(date_str);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+                Course course = new Course(Integer.parseInt(cursor.getString(1)),
+                                           Integer.parseInt(cursor.getString(2)),
+                                           Integer.parseInt(cursor.getString(3)),
+                                           date);
+                // Adding contact to list
+                courseList.add(course);
+            } while (cursor.moveToNext());
+        }
+        return courseList;
     }
 
     // Getting courses Count

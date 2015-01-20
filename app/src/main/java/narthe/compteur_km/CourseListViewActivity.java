@@ -11,31 +11,41 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 
 public class CourseListViewActivity extends Activity {
 
+    static DatabaseHandler db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list_view);
 
-        final ListView listview = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
+        Integer currentMonth = Calendar.MONTH;
+        final ArrayList<Course> list = CourseListViewActivity.db.getCoursesByMonth(currentMonth);
+        ArrayList<String> list_str = new ArrayList<>();
+        for (Course c : list)
+        {
+            list_str.add(c.getDate().toString() + " " + Integer.toString(c.getDistance()));
         }
+        final ListView listview = (ListView) findViewById(R.id.listview);
 
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
+//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+//                "Android", "iPhone", "WindowsMobile" };
+
+//        final ArrayList<String> list = new ArrayList<String>();
+//        for (int i = 0; i < values.length; ++i) {
+//            list.add(values[i]);
+//        }
+
+        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list_str);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
