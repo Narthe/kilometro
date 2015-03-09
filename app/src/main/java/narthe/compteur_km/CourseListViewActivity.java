@@ -3,6 +3,7 @@ package narthe.compteur_km;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,15 +19,14 @@ import java.util.List;
 
 public class CourseListViewActivity extends Activity {
 
-    static DatabaseHandler db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list_view);
 
         Integer currentMonth = Calendar.MONTH;
-        final ArrayList<Course> list = CourseListViewActivity.db.getCoursesByMonth(currentMonth);
+        DatabaseHandler db = new DatabaseHandler(this);
+        final ArrayList<Course> list = db.getAllCourses();
 
         if (!list.isEmpty())
         {
@@ -57,6 +57,9 @@ public class CourseListViewActivity extends Activity {
                 }
 
             });
+        }
+        else{
+            Log.d("Courses list", "courses list is empty");
         }
     }
 

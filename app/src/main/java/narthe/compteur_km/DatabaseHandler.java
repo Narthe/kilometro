@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -108,8 +109,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting All courses
-    public List<Course> getAllCourses() {
-        List<Course> courseList = new ArrayList<Course>();
+    public ArrayList<Course> getAllCourses() {
+        ArrayList<Course> courseList = new ArrayList<Course>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + COURSES_TABLE;
 
@@ -165,6 +166,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 // Adding contact to list
                 courseList.add(course);
             } while (cursor.moveToNext());
+        }
+        else{
+            Log.d("DatabaseHandler", "query returned nothing");
         }
         return courseList;
     }
