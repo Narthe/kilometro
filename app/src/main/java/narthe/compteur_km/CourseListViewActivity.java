@@ -11,10 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Date;
 
 
 public class CourseListViewActivity extends Activity {
@@ -23,8 +27,13 @@ public class CourseListViewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list_view);
+        JodaTimeAndroid.init(this);
 
-        Integer currentMonth = Calendar.MONTH;
+        java.util.Date juDate = new Date();
+        DateTime dt = new DateTime(juDate);
+        int month = dt.getMonthOfYear();  // where January is 1 and December is 12
+        int year = dt.getYear();
+        //Integer currentMonth = Calendar.MONTH;
         DatabaseHandler db = new DatabaseHandler(this);
         final ArrayList<Course> list = db.getAllCourses();
 
