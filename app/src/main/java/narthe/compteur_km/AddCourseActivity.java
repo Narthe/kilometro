@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +73,7 @@ public class AddCourseActivity extends ActionBarActivity {
                             Log.v("last record : ", start_str);
                             Log.v("new record : ", end_str);
 
-                            Course course = new Course(start, end, new Date());
+                            Course course = new Course(start, end, new DateTime());
                             System.out.println(course.toString());
                             AddCourseActivity.db.addCourse(course);
 

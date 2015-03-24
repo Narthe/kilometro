@@ -7,12 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by narthe on 11/01/2015.
@@ -66,13 +71,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addCourse(Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateToString = df.format(course.getDate());
+        DateTime date = new DateTime();
+        DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        String dtStr = dateDecoder.print(date);
         
         values.put(KEY_START, course.getStart());
         values.put(KEY_END, course.getEnd());
         values.put(KEY_DISTANCE, course.getDistance());
-        values.put(KEY_DATE, dateToString);
+        values.put(KEY_DATE, dtStr);
 
         // Inserting Row
         db.insert(COURSES_TABLE, null, values);
@@ -89,21 +95,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        String date_str = cursor.getString(4);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        try
-        {
-            date = sdf.parse(date_str);
+        DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTime courseDate = new DateTime();
+        try {
+            courseDate = dateDecoder.parseDateTime(cursor.getString(4));
         }
-        catch (ParseException ex){
-            ex.printStackTrace();
+        catch (NullPointerException e){
+            e.printStackTrace();
         }
 
         Course course = new Course(Integer.parseInt(cursor.getString(0)), //id
                                    Integer.parseInt(cursor.getString(1)), //start
                                    Integer.parseInt(cursor.getString(2)), //end
-                                   date);                                 //date
+                                   courseDate);                                 //date
         // return contact
         return course;
     }
@@ -120,18 +124,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                String date_str = cursor.getString(3);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date();
-                try
-                {
-                    date = sdf.parse(date_str);
-                }
-                catch (ParseException ex){
-                    ex.printStackTrace();
-                }
+                DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(4));
                 Course course = new Course(Integer.parseInt(cursor.getString(1)),
-                        Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), date);
+                        Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), courseDate);
                 // Adding contact to list
                 courseList.add(course);
             } while (cursor.moveToNext());
@@ -143,26 +139,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public ArrayList<Course> getCoursesByMonth(Integer month) {
         ArrayList<Course> courseList = new ArrayList<Course>();
-
-        String coursesByMonthQuery = "SELECT  * FROM " + COURSES_TABLE + " WHERE strftime('%m', date) = " + String.format("%01d", month);
+        Log.d("month", Integer.toString(month));
+        Log.d("month paded", String.format("%02d", month));
+        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
+        Log.d("query", coursesByMonthQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                String date_str = cursor.getString(3);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date();
-                try {
-                    date = sdf.parse(date_str);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
+                DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(4));
                 Course course = new Course(Integer.parseInt(cursor.getString(1)),
                                            Integer.parseInt(cursor.getString(2)),
                                            Integer.parseInt(cursor.getString(3)),
-                                           date);
+                                           courseDate);
                 // Adding contact to list
                 courseList.add(course);
             } while (cursor.moveToNext());
@@ -187,7 +179,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int updateCourse(Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
         String dateToString = df.format(course.getDate());
 
         ContentValues values = new ContentValues();
@@ -207,5 +199,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(COURSES_TABLE, KEY_ID + " = ?",
                 new String[] { String.valueOf(course.getId()) });
         db.close();
+    }
+
+    public void dropTable(){
+        String dropQuery = "DROP IF EXISTS " + COURSES_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(dropQuery, null);
+        cursor.close();
     }
 }

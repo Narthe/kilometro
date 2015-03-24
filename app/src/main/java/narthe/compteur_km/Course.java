@@ -1,5 +1,7 @@
 package narthe.compteur_km;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 /**
@@ -10,11 +12,11 @@ public class Course {
     private int start;
     private int end;
     private int distance;
-    private Date date;
+    private DateTime date;
 
     public Course() {}
 
-    public Course(int id, int start, int end, Date date) {
+    public Course(int id, int start, int end, DateTime date) {
         this.id = id;
         this.start = start;
         this.end = end;
@@ -22,7 +24,7 @@ public class Course {
         this.date = date;
     }
 
-    public Course(int start, int end, Date date) {
+    public Course(int start, int end, DateTime date) {
         this.start = start;
         this.end = end;
         this.distance = end-start;
@@ -43,7 +45,7 @@ public class Course {
         return distance;
     }
 
-    public Date getDate() {
+    public DateTime getDate() {
         return date;
     }
 
@@ -59,7 +61,7 @@ public class Course {
         this.distance = distance;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 
