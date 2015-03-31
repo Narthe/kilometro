@@ -5,23 +5,134 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="#ff1a2530">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter"
-        android:id="@+id/add_course_button"
-        android:onClick="addCourse"
-        android:layout_weight="0.13" />
+        android:gravity="center">
 
-    <Button
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/app_name"
+            android:id="@+id/app_name_txt_view"
+            android:textSize="75sp"
+            android:textColor="#E74C3C" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_plus"
+            android:id="@+id/add_course_button"
+            android:onClick="addCourse"
+            android:layout_weight="1"
+            android:textSize="70sp"
+            android:background="#00000000"
+            android:textColor="#34495E" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_list"
+            android:id="@+id/list_courses_button"
+            android:onClick="listCourses"
+            android:layout_weight="1"
+            android:textSize="70sp"
+            android:textColor="#34495E"
+            android:background="#00000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/add_action"
+            android:id="@+id/textView"
+            android:textColor="#34495E"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/list_action"
+            android:id="@+id/textView2"
+            android:textColor="#34495E"
+            android:layout_weight="1"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Liste"
-        android:id="@+id/list_courses_button"
-        android:onClick="listCourses"
-        android:layout_weight="0.13" />
+        android:paddingTop="20dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_pdf"
+            android:id="@+id/export_button"
+            android:onClick="export"
+            android:layout_weight="1"
+            android:textSize="70sp"
+            android:background="#00000000"
+            android:textColor="#34495E"
+            android:nestedScrollingEnabled="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_chart"
+            android:id="@+id/stat_button"
+            android:onClick="showCharts"
+            android:layout_weight="1"
+            android:textSize="70sp"
+            android:textColor="#34495E"
+            android:background="#00000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/export_action"
+            android:id="@+id/textView3"
+            android:textColor="#34495E"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/stats_action"
+            android:id="@+id/textView4"
+            android:textColor="#34495E"
+            android:layout_weight="1"
+            android:gravity="center" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,13 +1,16 @@
 package narthe.compteur_km;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -19,6 +22,24 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         DatabaseHandler db = new DatabaseHandler(this);
         //db.dropTable();
+
+        // Setting font for App Logo
+        TextView tv=(TextView)findViewById(R.id.app_name_txt_view);
+        //Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Mission-Script.otf");
+        Typeface logoFace = Typeface.createFromAsset(getAssets(),"fonts/Nautilus.otf");
+        tv.setTypeface(logoFace);
+
+        //Setting font-awesome for buttons
+        Typeface fontAwesomeFace = Typeface.createFromAsset(getAssets(),"fonts/fontawesome-webfont.ttf");
+        Button add_button = (Button)findViewById(R.id.add_course_button);
+        add_button.setTypeface(fontAwesomeFace);
+        Button list_button = (Button)findViewById(R.id.list_courses_button);
+        list_button.setTypeface(fontAwesomeFace);
+        Button export_button = (Button)findViewById(R.id.export_button);
+        export_button.setTypeface(fontAwesomeFace);
+        Button stat_button = (Button)findViewById(R.id.stat_button);
+        stat_button.setTypeface(fontAwesomeFace);
+
     }
 
 
@@ -47,14 +68,21 @@ public class MainActivity extends ActionBarActivity {
 
     public void addCourse(View view){
         Intent intent = new Intent(this, AddCourseActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.edit_message);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 
     public void listCourses(View view){
         Intent intent = new Intent(this, CourseListViewActivity.class);
+        startActivity(intent);
+    }
+
+    public void export(View view){
+        Intent intent = new Intent(this, ExportActivity.class);
+        startActivity(intent);
+    }
+
+    public void showCharts(View view){
+        Intent intent = new Intent(this, ChartsActivity.class);
         startActivity(intent);
     }
 }

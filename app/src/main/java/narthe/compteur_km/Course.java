@@ -3,6 +3,7 @@ package narthe.compteur_km;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by narthe on 11/01/2015.
@@ -47,6 +48,14 @@ public class Course {
 
     public DateTime getDate() {
         return date;
+    }
+
+    public String getDateToString(){
+        String dayOfMonth = Integer.toString(this.date.getDayOfMonth());
+        String dayOfWeek = this.date.dayOfWeek().getAsText(Locale.FRANCE);
+        String month = this.date.monthOfYear().getAsText(Locale.FRANCE);
+
+        return dayOfWeek + " " + dayOfMonth + " " + month;
     }
 
     public void setStart(int start) {

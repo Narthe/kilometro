@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Compteur_km</string>
+    <string name="app_name">Kilometro</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="action_settings">Settings</string>
@@ -15,7 +15,22 @@
     <string name="action_search">Search</string>
     <string name="action_example">Action example</string>
     <string name="title_activity_add_run">AddRunActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_course_list_view">CourseListViewActivity</string>
+
+    <string name="icon_plus">&#xf067;</string>
+    <string name="icon_list">&#xf0ca;</string>
+    <string name="icon_pdf">&#xf1c1;</string>
+    <string name="icon_chart">&#xf200;</string>
+
+    <string name="add_action">Ajouter</string>
+    <string name="list_action">Liste des trajets</string>
+    <string name="export_action">Exporter en PDF</string>
+    <string name="stats_action">Voir les statistiques</string>
+    <string name="title_activity_export">ExportActivity</string>
+
+    <string name="wip">Cette page est en cours de construction !</string>
+    <string name="title_activity_charts">ChartsActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

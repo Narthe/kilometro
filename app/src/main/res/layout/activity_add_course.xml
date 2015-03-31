@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="narthe.compteur_km.AddCourseActivity">
+    tools:context="narthe.compteur_km.AddCourseActivity"
+    android:background="#ff1a2530">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +21,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Ajouter un trajet"
             android:id="@+id/addRunLabel"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="#34495E" />
 
     </LinearLayout>
 
@@ -31,7 +33,8 @@
         android:text="Précédent relevé"
         android:id="@+id/lastRecordLabel"
         android:layout_marginTop="78dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:textColor="#34495E" />
 
     <EditText
         android:layout_width="match_parent"
@@ -40,7 +43,8 @@
         android:ems="10"
         android:id="@+id/lastRecordEdit"
         android:layout_alignBottom="@+id/lastRecordLabel"
-        android:layout_toEndOf="@+id/lastRecordLabel" />
+        android:layout_toEndOf="@+id/lastRecordLabel"
+        android:textColor="#34495E" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +53,8 @@
         android:text="Nouveau relevé"
         android:id="@+id/newRecordLabel"
         android:layout_below="@+id/lastRecordEdit"
-        android:layout_marginTop="34dp" />
+        android:layout_marginTop="34dp"
+        android:textColor="#34495E" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -58,7 +63,8 @@
         android:ems="10"
         android:id="@+id/newRecordEdit"
         android:layout_alignBottom="@+id/newRecordLabel"
-        android:layout_toEndOf="@+id/newRecordLabel" />
+        android:layout_toEndOf="@+id/newRecordLabel"
+        android:textColor="#34495E" />
 
     <Button
         android:layout_width="wrap_content"

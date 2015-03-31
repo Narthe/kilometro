@@ -2,6 +2,7 @@ package narthe.compteur_km;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -36,36 +37,13 @@ public class CourseListViewActivity extends Activity {
 
         DatabaseHandler db = new DatabaseHandler(this);
         //final ArrayList<Course> list = db.getAllCourses();
-        final ArrayList<Course> list = db.getCoursesByMonth(month);
-        if (!list.isEmpty())
+        final ArrayList<Course> courseList = db.getCoursesByMonth(month);
+        if (!courseList.isEmpty())
         {
-            ArrayList<String> list_str = new ArrayList<>();
-            for (Course c : list) {
-                list_str.add(c.getDate().toString() + " " + Integer.toString(c.getDistance()));
-            }
             final ListView listview = (ListView) findViewById(R.id.listview);
-
-            final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list_str);
+            Resources res = getResources();
+            final ListViewAdapter adapter = new ListViewAdapter(this, courseList, res);
             listview.setAdapter(adapter);
-
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, final View view,
-                                        int position, long id) {
-                    final String item = (String) parent.getItemAtPosition(position);
-                    view.animate().setDuration(2000).alpha(0)
-                            .withEndAction(new Runnable() {
-                                @Override
-                                public void run() {
-                                    list.remove(item);
-                                    adapter.notifyDataSetChanged();
-                                    view.setAlpha(1);
-                                }
-                            });
-                }
-
-            });
         }
         else{
             Log.d("Courses list", "courses list is empty");
