@@ -33,6 +33,7 @@ public class CourseListViewActivity extends Activity {
         DateTime dt = new DateTime(juDate);
         int month = dt.getMonthOfYear();  // where January is 1 and December is 12
         int year = dt.getYear();
+
         DatabaseHandler db = new DatabaseHandler(this);
         //final ArrayList<Course> list = db.getAllCourses();
         final ArrayList<Course> list = db.getCoursesByMonth(month);
