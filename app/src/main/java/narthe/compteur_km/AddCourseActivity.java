@@ -28,7 +28,7 @@ public class AddCourseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_course);
         this.initWidgets();
         this.initEvents();
-        this.db = new DatabaseHandler(this);
+        db = new DatabaseHandler(this);
     }
 
 
