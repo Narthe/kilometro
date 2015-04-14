@@ -7,6 +7,14 @@
     </style>
     <style name="customEditText">
         <!-- Customize your theme here. -->
-        <item name="android:background">#ff1a2530</item>
+        <item name="android:background">@drawable/custom_edit_text</item>
+
+        <!--<item name="android:textColor">#FFFFFF</item>-->
+    </style>
+    <style name="customEditButton">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/custom_button</item>
+
+        <!--<item name="android:textColor">#FFFFFF</item>-->
     </style>
 </resources>

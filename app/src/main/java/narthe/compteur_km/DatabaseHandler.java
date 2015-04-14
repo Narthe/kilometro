@@ -104,12 +104,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             e.printStackTrace();
         }
 
-        Course course = new Course(Integer.parseInt(cursor.getString(0)), //id
+        cursor.close();
+        return new Course(Integer.parseInt(cursor.getString(0)),          //id
                                    Integer.parseInt(cursor.getString(1)), //start
                                    Integer.parseInt(cursor.getString(2)), //end
-                                   courseDate);                                 //date
-        // return contact
-        return course;
+                                   courseDate);                           //date
     }
 
     // Getting All courses
@@ -140,7 +139,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<Course> getCoursesByMonth(Integer month) {
         ArrayList<Course> courseList = new ArrayList<Course>();
         Log.d("month", Integer.toString(month));
-        Log.d("month paded", String.format("%02d", month));
+        Log.d("month padded", String.format("%02d", month));
         String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
         Log.d("query", coursesByMonthQuery);
         SQLiteDatabase db = this.getReadableDatabase();
@@ -155,6 +154,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                            Integer.parseInt(cursor.getString(2)),
                                            Integer.parseInt(cursor.getString(3)),
                                            courseDate);
+                Log.d("Course after query : ", course.toString());
                 // Adding contact to list
                 courseList.add(course);
             } while (cursor.moveToNext());

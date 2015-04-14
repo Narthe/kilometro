@@ -24,56 +24,37 @@
             android:layout_gravity="center_horizontal"
             android:textColor="#34495E" />
 
+        <EditText
+            style="@style/customEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/lastRecordEdit"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+            <!--android:background="#59FFFFFF"-->
+
+        <EditText
+            style="@style/customEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/newRecordEdit"
+            android:textColor="#34495E" />
+
+        <Button
+            style="@style/customEditButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter"
+            android:id="@+id/addRunButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Précédent relevé"
-        android:id="@+id/lastRecordLabel"
-        android:layout_marginTop="78dp"
-        android:layout_alignParentTop="true"
-        android:textColor="#34495E" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/lastRecordEdit"
-        android:layout_alignBottom="@+id/lastRecordLabel"
-        android:layout_toEndOf="@+id/lastRecordLabel"
-        android:textColor="#34495E"
-        android:background="@layout/text_input_style"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nouveau relevé"
-        android:id="@+id/newRecordLabel"
-        android:layout_below="@+id/lastRecordEdit"
-        android:layout_marginTop="34dp"
-        android:textColor="#34495E" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/newRecordEdit"
-        android:layout_alignBottom="@+id/newRecordLabel"
-        android:layout_toEndOf="@+id/newRecordLabel"
-        android:textColor="#34495E" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ajouter"
-        android:id="@+id/addRunButton"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
