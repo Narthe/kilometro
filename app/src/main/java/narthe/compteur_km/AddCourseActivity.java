@@ -26,9 +26,9 @@ public class AddCourseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+        db = new DatabaseHandler(this);
         this.initWidgets();
         this.initEvents();
-        db = new DatabaseHandler(this);
     }
 
 
@@ -58,6 +58,8 @@ public class AddCourseActivity extends ActionBarActivity {
         this.lastRecordEdit = (EditText)findViewById(R.id.lastRecordEdit);
         this.newRecordEdit = (EditText)findViewById(R.id.newRecordEdit);
         this.addButton = (Button)findViewById(R.id.addRunButton);
+        Course course = db.getLastCourse();
+//        this.lastRecordEdit.setText(course.getEnd());
     }
 
     public void initEvents(){

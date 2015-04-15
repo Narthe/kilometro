@@ -138,10 +138,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public ArrayList<Course> getCoursesByMonth(Integer month) {
         ArrayList<Course> courseList = new ArrayList<Course>();
-        Log.d("month", Integer.toString(month));
-        Log.d("month padded", String.format("%02d", month));
+//        Log.d("month", Integer.toString(month));
+//        Log.d("month padded", String.format("%02d", month));
         String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
-        Log.d("query", coursesByMonthQuery);
+//        Log.d("query", coursesByMonthQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
 
@@ -163,6 +163,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.d("DatabaseHandler", "query returned nothing");
         }
         return courseList;
+    }
+
+    public Course getLastCourse(){
+        String lastCourseQuery = "SELECT * FROM " + COURSES_TABLE + " ORDER BY datetime(" + KEY_DATE + ") DESC LIMIT 1;";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(lastCourseQuery, null);
+        Course course = new Course();
+        if (cursor.moveToFirst()) {
+            do {
+                DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(4));
+                course = new Course(Integer.parseInt(cursor.getString(1)),
+                                            Integer.parseInt(cursor.getString(2)),
+                                            Integer.parseInt(cursor.getString(3)),
+                                            courseDate);
+            } while (cursor.moveToNext());
+        }
+        return course;
     }
 
     // Getting courses Count
