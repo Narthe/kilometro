@@ -1,8 +1,5 @@
 package narthe.compteur_km;
 
-/**
- * Created by jbrasseur on 4/1/15.
- */
 import java.io.FileOutputStream;
 import java.util.Date;
 

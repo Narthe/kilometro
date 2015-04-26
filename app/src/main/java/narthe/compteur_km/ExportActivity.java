@@ -2,11 +2,19 @@ package narthe.compteur_km;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import org.joda.time.DateTime;
 
 
 public class ExportActivity extends ActionBarActivity {
+
+    Button exportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +29,20 @@ public class ExportActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_export, menu);
         return true;
     }
+
+    public void initWidgets(){
+        this.exportButton = (Button)findViewById(R.id.exportButton);
+    }
+
+    public void initEvents(){
+        this.exportButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ExportPDF.export();
+                    }
+                }
+        );
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
