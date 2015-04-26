@@ -19,9 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by narthe on 11/01/2015.
- */
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
@@ -92,28 +89,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(COURSES_TABLE, new String[] { KEY_ID,
                         KEY_START, KEY_END, KEY_DISTANCE, KEY_DATE }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
+            DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+            DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
 
-        DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-        DateTime courseDate = new DateTime();
-        try {
-            courseDate = dateDecoder.parseDateTime(cursor.getString(4));
+            cursor.close();
+            return new Course(Integer.parseInt(cursor.getString(0)),          //id
+                    Integer.parseInt(cursor.getString(1)), //start
+                    Integer.parseInt(cursor.getString(2)), //end
+                    courseDate);                           //date
         }
-        catch (NullPointerException e){
-            e.printStackTrace();
+        else {
+            return null;
         }
-
-        cursor.close();
-        return new Course(Integer.parseInt(cursor.getString(0)),          //id
-                                   Integer.parseInt(cursor.getString(1)), //start
-                                   Integer.parseInt(cursor.getString(2)), //end
-                                   courseDate);                           //date
     }
 
     // Getting All courses
     public ArrayList<Course> getAllCourses() {
-        ArrayList<Course> courseList = new ArrayList<Course>();
+        ArrayList<Course> courseList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + COURSES_TABLE;
 
@@ -124,20 +117,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(4));
-                Course course = new Course(Integer.parseInt(cursor.getString(1)),
-                        Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), courseDate);
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                Course course = new Course(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))),
+                                           Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_START))),
+                                           Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_END))),
+                                           courseDate);
                 // Adding contact to list
                 courseList.add(course);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         // return contact list
         return courseList;
     }
 
     public ArrayList<Course> getCoursesByMonth(Integer month) {
-        ArrayList<Course> courseList = new ArrayList<Course>();
+        ArrayList<Course> courseList = new ArrayList<>();
 //        Log.d("month", Integer.toString(month));
 //        Log.d("month padded", String.format("%02d", month));
         String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
@@ -149,10 +144,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(4));
-                Course course = new Course(Integer.parseInt(cursor.getString(1)),
-                                           Integer.parseInt(cursor.getString(2)),
-                                           Integer.parseInt(cursor.getString(3)),
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                Course course = new Course(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))),
+                                           Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_START))),
+                                           Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_END))),
                                            courseDate);
                 Log.d("Course after query : ", course.toString());
                 // Adding contact to list
@@ -162,6 +157,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         else{
             Log.d("DatabaseHandler", "query returned nothing");
         }
+        cursor.close();
         return courseList;
     }
 
@@ -173,13 +169,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(4));
-                course = new Course(Integer.parseInt(cursor.getString(1)),
-                                            Integer.parseInt(cursor.getString(2)),
-                                            Integer.parseInt(cursor.getString(3)),
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                course = new Course(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))),
+                                            Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_START))),
+                                            Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_END))),
                                             courseDate);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return course;
     }
 

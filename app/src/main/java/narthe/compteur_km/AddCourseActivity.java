@@ -59,7 +59,8 @@ public class AddCourseActivity extends ActionBarActivity {
         this.newRecordEdit = (EditText)findViewById(R.id.newRecordEdit);
         this.addButton = (Button)findViewById(R.id.addRunButton);
         Course course = db.getLastCourse();
-//        this.lastRecordEdit.setText(course.getEnd());
+        Log.d("last course end value", Integer.toString(course.getEnd()));
+        this.lastRecordEdit.setText(Integer.toString(course.getEnd()));
     }
 
     public void initEvents(){
