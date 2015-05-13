@@ -34,15 +34,16 @@ public class ExportActivity extends ActionBarActivity {
         this.exportButton = (Button)findViewById(R.id.exportButton);
     }
 
-    public void initEvents(){
+    public void initEvents() {
         this.exportButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ExportPDF.export();
+
                     }
                 }
         );
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
