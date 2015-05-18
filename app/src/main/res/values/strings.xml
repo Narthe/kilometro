@@ -34,5 +34,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="add">Ajouter</string>
     <string name="exporter">Exporter</string>
+    <string name="sendvia">Envoyer via</string>
 
 </resources>
