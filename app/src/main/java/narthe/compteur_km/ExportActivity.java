@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import java.io.File;
 
+import pdf_export.Main;
+
 
 public class ExportActivity extends ActionBarActivity {
 
@@ -41,6 +43,8 @@ public class ExportActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        getResources().openRawResource(R.raw.template);
+                        Main.serialize();
                         startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
                     }
                 }

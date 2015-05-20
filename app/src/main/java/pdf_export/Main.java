@@ -22,7 +22,11 @@ import narthe.compteur_km.R;
 public class Main {
 
 
-    public static void serialize(ArrayList<Course> courses, String startDate, String endDate, Integer distance) throws SAXException, TransformerException, ParserConfigurationException, IOException, DocumentException {
+    public static void serialize(ArrayList<Course> courses,
+                                 String startDate,
+                                 String endDate,
+                                 Integer distance,
+                                 FileInputStream inputXSL) throws SAXException, TransformerException, ParserConfigurationException, IOException, DocumentException {
 
         String startDateXml = String.format("<start_date>%s</start_date>\n", startDate);
         String endDateXml = String.format("<end_date>%s</end_date>\n", startDate);
@@ -33,7 +37,7 @@ public class Main {
         }
         String dataXML = "<Courses>\n" + startDateXml + endDateXml + distanceXml + coursesXml + "\n</Courses>";
 
-        String inputXSL = "./templates/template.xsl";
+        //String inputXSL = "./templates/template.xsl";
         String inputCSS = "./templates/style.css";
         String outputxHTML = "./output/output.xhtml";
         String outputPDF = "./output/output.pdf";
@@ -45,6 +49,7 @@ public class Main {
         }
 
         XmlToHtml st = new XmlToHtml();
+        FileInputStream inputXSL = getContext().getAssets().open("filename.ext");
         st.transform(dataXML, inputXSL, outputxHTML);
 
         FileInputStream outputxHTMLStream = new FileInputStream(outputxHTML);

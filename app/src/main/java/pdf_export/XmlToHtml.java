@@ -4,6 +4,7 @@ package pdf_export;
  * Created by jbrasseur on 5/19/15.
  */
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -21,7 +22,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 public class XmlToHtml {
 
-    public void transform(String dataXML, String inputXSL, String outputHTML) throws IOException, SAXException, ParserConfigurationException, TransformerException
+    public void transform(String dataXML, FileInputStream inputXSL, String outputHTML) throws IOException, SAXException, ParserConfigurationException, TransformerException
     //throws TransformerConfigurationException,
     //TransformerException
     {
