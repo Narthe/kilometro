@@ -1,8 +1,11 @@
 package pdf_export;
 
+import com.itextpdf.text.DocumentException;
+
 import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,18 +21,17 @@ import narthe.compteur_km.R;
  */
 public class Main {
 
-    private final ArrayList<Course> courses;
 
-    public Main(ArrayList<Course> courses) {
-        this.courses = courses;
-    }
+    public static void serialize(ArrayList<Course> courses, String startDate, String endDate, Integer distance) throws SAXException, TransformerException, ParserConfigurationException, IOException, DocumentException {
 
-    public void serialize() throws SAXException, TransformerException, ParserConfigurationException, IOException {
+        String startDateXml = String.format("<start_date>%s</start_date>\n", startDate);
+        String endDateXml = String.format("<end_date>%s</end_date>\n", startDate);
+        String distanceXml = String.format("<distance>%d</distance>\n", distance);
         String coursesXml = "";
         for(Course course : courses) {
             coursesXml+= ObjectToXml.serializeCourse(course) + "\n";
         }
-        String dataXML = "<Courses>\n" + coursesXml + "\n</Courses>";
+        String dataXML = "<Courses>\n" + startDateXml + endDateXml + distanceXml + coursesXml + "\n</Courses>";
 
         String inputXSL = "./templates/template.xsl";
         String inputCSS = "./templates/style.css";
@@ -44,6 +46,11 @@ public class Main {
 
         XmlToHtml st = new XmlToHtml();
         st.transform(dataXML, inputXSL, outputxHTML);
+
+        FileInputStream outputxHTMLStream = new FileInputStream(outputxHTML);
+
+        // xHTML to PDF
+        HtmlToPDF.transform(outputxHTMLStream, inputCSS, outputPDF);
     }
 
 }

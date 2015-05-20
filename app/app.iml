@@ -95,5 +95,6 @@
     <orderEntry type="library" exported="" name="MPAndroidChart-v2.1.0" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.7-no-tzdb" level="project" />
     <orderEntry type="library" exported="" name="xpp3_min-1.1.4c" level="project" />
+    <orderEntry type="library" exported="" name="xmlworker-5.5.5" level="project" />
   </component>
 </module>
