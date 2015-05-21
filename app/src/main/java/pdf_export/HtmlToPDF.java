@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public class HtmlToPDF {
 
-    public static void transform(FileInputStream htmlFile, String cssFile, String outputPDF) throws IOException, DocumentException
+    public static void transform(FileInputStream htmlFile, FileInputStream cssFile, FileOutputStream outputPDF) throws IOException, DocumentException
     {
         /**
          * To add CSS see :
@@ -33,12 +33,12 @@ public class HtmlToPDF {
          */
 
         Document document = new Document();
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputPDF));
+        PdfWriter writer = PdfWriter.getInstance(document, outputPDF);
         document.open();
 
         // CSS
         CSSResolver cssResolver = new StyleAttrCSSResolver();
-        CssFile css = XMLWorkerHelper.getCSS(new FileInputStream(cssFile));
+        CssFile css = XMLWorkerHelper.getCSS(cssFile);
         cssResolver.addCss(css);
 
         //HTML

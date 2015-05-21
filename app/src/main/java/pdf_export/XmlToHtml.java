@@ -22,7 +22,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 public class XmlToHtml {
 
-    public void transform(String dataXML, FileInputStream inputXSL, String outputHTML) throws IOException, SAXException, ParserConfigurationException, TransformerException
+    public void transform(String dataXML, FileInputStream inputXSL, File outputxHTML) throws IOException, SAXException, ParserConfigurationException, TransformerException
     //throws TransformerConfigurationException,
     //TransformerException
     {
@@ -31,18 +31,13 @@ public class XmlToHtml {
         Transformer transformer = null;
         transformer = factory.newTransformer(xslStream);
 
-        File fOut = new File(outputHTML);
-        if (!fOut.exists())
-        {
-            fOut.createNewFile();
-        }
         //StreamSource in = new StreamSource(dataXML);
         Document coursesNode = null;
         coursesNode = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                 .parse(new InputSource(new StringReader(dataXML)));
 
         DOMSource sourcexml = new DOMSource(coursesNode);
-        StreamResult out = new StreamResult(fOut);
+        StreamResult out = new StreamResult(outputxHTML);
         //System.out.printf("The file %s exists", outputHTML);
         transformer.transform(sourcexml, out);
     }

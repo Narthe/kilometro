@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import pdf_export.Main;
 
@@ -16,7 +17,6 @@ import pdf_export.Main;
 public class ExportActivity extends ActionBarActivity {
 
     Button exportButton;
-    File pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,14 @@ public class ExportActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getResources().openRawResource(R.raw.template);
-                        Main.serialize();
+                        FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
+                        FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
+                        File pdf = Main.getPDF(courses,
+                                       startDate,
+                                       endDate,
+                                       distance,
+                                       inputXSL,
+                                       inputCSS);
                         startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
                     }
                 }
