@@ -169,7 +169,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                                 Integer toYear) {
         ArrayList<Course> courseList = new ArrayList<>();
         /** SELECT * FROM `COURSES` WHERE date BETWEEN '2015-05-01' AND '2015-05-31' **/
-        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
+        String from = String.format("%d-%02d-%02d", fromYear, fromMonth, fromDay);
+        String to = String.format("%d-%02d-%02d", toYear, toMonth, toDay);
+
+        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE `date` BETWEEN '" + from + "' AND '" + to + "'";
 //        Log.d("query", coursesByMonthQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(coursesByMonthQuery, null);

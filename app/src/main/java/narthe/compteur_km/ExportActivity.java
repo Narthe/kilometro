@@ -45,6 +45,7 @@ public class ExportActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        db.getCoursesByPeriod();
                         FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
                         FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
                         File pdf = Main.getPDF(courses,
