@@ -17,11 +17,13 @@ import pdf_export.Main;
 public class ExportActivity extends ActionBarActivity {
 
     Button exportButton;
+    static DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+        db = new DatabaseHandler(this);
         this.initWidgets();
         this.initEvents();
     }
@@ -46,11 +48,11 @@ public class ExportActivity extends ActionBarActivity {
                         FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
                         FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
                         File pdf = Main.getPDF(courses,
-                                       startDate,
-                                       endDate,
-                                       distance,
-                                       inputXSL,
-                                       inputCSS);
+                                startDate,
+                                endDate,
+                                distance,
+                                inputXSL,
+                                inputCSS);
                         startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
                     }
                 }

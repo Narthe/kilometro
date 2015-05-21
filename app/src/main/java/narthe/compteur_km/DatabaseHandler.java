@@ -161,6 +161,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return courseList;
     }
 
+    public ArrayList<Course> getCoursesByPeriod(Integer fromDay,
+                                                Integer fromMonth,
+                                                Integer fromYear,
+                                                Integer toDay,
+                                                Integer toMonth,
+                                                Integer toYear) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        /** SELECT * FROM `COURSES` WHERE date BETWEEN '2015-05-01' AND '2015-05-31' **/
+        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
+//        Log.d("query", coursesByMonthQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                DateTimeFormatter dateDecoder = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                DateTime courseDate = dateDecoder.parseDateTime(cursor.getString(cursor.getColumnIndex(KEY_DATE)));
+                Course course = new Course(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))),
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_START))),
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_END))),
+                        courseDate);
+                Log.d("Course after query : ", course.toString());
+                // Adding contact to list
+                courseList.add(course);
+            } while (cursor.moveToNext());
+        }
+        else{
+            Log.d("DatabaseHandler", "query returned nothing");
+        }
+        cursor.close();
+        return courseList;
+    }
+
     public Course getLastCourse(){
         String lastCourseQuery = "SELECT * FROM " + COURSES_TABLE + " ORDER BY datetime(" + KEY_DATE + ") DESC LIMIT 1;";
         SQLiteDatabase db = this.getReadableDatabase();
