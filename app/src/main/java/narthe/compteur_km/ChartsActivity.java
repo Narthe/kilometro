@@ -6,8 +6,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -48,37 +53,60 @@ public class ChartsActivity extends ActionBarActivity {
     }
 
     public void initWidgets(){
-        LineChart mLineChart = (LineChart) findViewById(R.id.chart);
+        BarChart mChart = (BarChart) findViewById(R.id.chart);
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        mChart.setMaxVisibleValueCount(60);
+
+        // scaling can now only be done on x- and y-axis separately
+        mChart.setPinchZoom(false);
+
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawGridBackground(false);
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setSpaceBetweenLabels(0);
+        xAxis.setDrawGridLines(false);
+
+        mChart.getAxisLeft().setDrawGridLines(false);
 
         ArrayList<Entry> valsComp1 = new ArrayList<Entry>();
         ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
 
-        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
-        valsComp1.add(c1e1);
-        Entry c1e2 = new Entry(50.000f, 1); // 1 == quarter 2 ...
-        valsComp1.add(c1e2);
-        // and so on ...
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        Entry c2e1 = new Entry(120.000f, 0); // 0 == quarter 1
-        valsComp2.add(c2e1);
-        Entry c2e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
-        valsComp2.add(c2e2);
-        //...
+        for (int i = 0; i < 20; i++) {
+            float val1 = (float) (Math.random() * i) + i / 3;
+            yVals1.add(new BarEntry((int) val1, i));
+        }
+        /** adapted for Courses :
+         * Integer i = 0;
+         * foreach course in Courses{
+         *  yVals.add(new BarEntry((int) distance, i));
+         *  xVals.add(month)
+         *  i++;
+         * }
+         */
 
-        LineDataSet setComp1 = new LineDataSet(valsComp1, "Company 1");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company 2");
-        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+/*        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < 50; i++) {
+            xVals.add((int) yVals1.get(i).getVal() + "");
+        }*/
 
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(setComp1);
-        dataSets.add(setComp2);
+        BarDataSet set1 = new BarDataSet(yVals1, "Data set");
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(set1);
 
         ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("1.Q"); xVals.add("2.Q"); xVals.add("3.Q"); xVals.add("4.Q");
+        xVals.add("janvier"); xVals.add("fevrier"); xVals.add("mars"); xVals.add("avril");
 
-        LineData data = new LineData(xVals, dataSets);
-        mLineChart.setData(data);
-        mLineChart.invalidate(); // refresh
+        BarData data = new BarData(xVals, dataSets);
+        mChart.setData(data);
+        // add a nice and smooth animation
+        mChart.animateY(2500);
+        mChart.invalidate(); // refresh
     }
 }
