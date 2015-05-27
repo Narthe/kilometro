@@ -135,7 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ArrayList<Course> courseList = new ArrayList<>();
 //        Log.d("month", Integer.toString(month));
 //        Log.d("month padded", String.format("%02d", month));
-        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `date`) = '" + String.format("%02d", month) + "'";
+        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE strftime('%m', `" + KEY_DATE + "`) = '" + String.format("%02d", month) + "'";
 //        Log.d("query", coursesByMonthQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
@@ -172,7 +172,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String from = String.format("%d-%02d-%02d", fromYear, fromMonth, fromDay);
         String to = String.format("%d-%02d-%02d", toYear, toMonth, toDay);
 
-        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE `date` BETWEEN '" + from + "' AND '" + to + "'";
+        String coursesByMonthQuery = "SELECT  * FROM `" + COURSES_TABLE + "` WHERE `" + KEY_DATE + "` BETWEEN '" + from + "' AND '" + to + "'";
 //        Log.d("query", coursesByMonthQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
@@ -196,6 +196,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return courseList;
+    }
+
+    public Integer getDistanceOnPeriod(Integer fromDay,
+                                                Integer fromMonth,
+                                                Integer fromYear,
+                                                Integer toDay,
+                                                Integer toMonth,
+                                                Integer toYear) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        /** SELECT SUM(distance) FROM `COURSES` WHERE date BETWEEN '2015-05-01' AND '2015-05-31' **/
+        String from = String.format("%d-%02d-%02d", fromYear, fromMonth, fromDay);
+        String to = String.format("%d-%02d-%02d", toYear, toMonth, toDay);
+
+        String coursesByMonthQuery = "SELECT  SUM("+ KEY_DISTANCE + ") FROM `" + COURSES_TABLE + "` WHERE `" + KEY_DATE + "` BETWEEN '" + from + "' AND '" + to + "'";
+//        Log.d("query", coursesByMonthQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(coursesByMonthQuery, null);
+        Integer res = 0;
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                res = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        else{
+            Log.d("DatabaseHandler", "query returned nothing");
+        }
+        cursor.close();
+        return res;
     }
 
     public Course getLastCourse(){

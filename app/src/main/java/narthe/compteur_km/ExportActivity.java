@@ -8,8 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.itextpdf.text.DocumentException;
+
+import org.xml.sax.SAXException;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import pdf_export.Main;
 
@@ -45,15 +54,21 @@ public class ExportActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        db.getCoursesByPeriod();
+                        ArrayList <Course> courses = db.getCoursesByPeriod(1, 5, 2015, 31, 5, 2015);
+                        Integer distance = db.getDistanceOnPeriod(1, 5, 2015, 31, 5, 2015);
                         FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
                         FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
-                        File pdf = Main.getPDF(courses,
-                                startDate,
-                                endDate,
-                                distance,
-                                inputXSL,
-                                inputCSS);
+                        File pdf = null;
+                        try {
+                            pdf = Main.getPDF(courses,
+                                    "01/05/2015",
+                                    "31/05/2015",
+                                    distance,
+                                    inputXSL,
+                                    inputCSS);
+                        } catch (SAXException | TransformerException | IOException | ParserConfigurationException | DocumentException e) {
+                            e.printStackTrace();
+                        }
                         startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
                     }
                 }

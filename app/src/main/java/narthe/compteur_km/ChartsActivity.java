@@ -22,10 +22,13 @@ import java.util.ArrayList;
 
 public class ChartsActivity extends ActionBarActivity {
 
+    static DatabaseHandler db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts);
+        db = new DatabaseHandler(this);
         this.initWidgets();
     }
 
