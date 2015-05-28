@@ -131,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return courseList;
     }
 
-    public ArrayList<Course> getCoursesByMonth(Integer month) {
+    public ArrayList<Course> getCoursesByMonth(Integer month, Integer year) {
         ArrayList<Course> courseList = new ArrayList<>();
 //        Log.d("month", Integer.toString(month));
 //        Log.d("month padded", String.format("%02d", month));

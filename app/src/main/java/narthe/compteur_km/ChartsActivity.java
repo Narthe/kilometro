@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class ChartsActivity extends ActionBarActivity {
@@ -56,6 +57,11 @@ public class ChartsActivity extends ActionBarActivity {
     }
 
     public void initWidgets(){
+        // Getting data
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+
         BarChart mChart = (BarChart) findViewById(R.id.chart);
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
@@ -74,21 +80,21 @@ public class ChartsActivity extends ActionBarActivity {
 
         mChart.getAxisLeft().setDrawGridLines(false);
 
-        ArrayList<Entry> valsComp1 = new ArrayList<Entry>();
-        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
 
         for (int i = 0; i < 20; i++) {
             float val1 = (float) (Math.random() * i) + i / 3;
-            yVals1.add(new BarEntry((int) val1, i));
+            yVals.add(new BarEntry((int) val1, i));
         }
-        /** adapted for Courses :
-         * Integer i = 0;
-         * foreach course in Courses{
-         *  yVals.add(new BarEntry((int) distance, i));
-         *  xVals.add(month)
-         *  i++;
+
+        /** adapted for Courses
+         * if (byMonth){
+         *      int i = 0;
+         *      for day in daysOfMonth{
+         *          int distance = db.getDistanceByDay(day);
+         *          yVals.add(new BarEntry(distance, day));
+         *          xVals.add(day + "");
+         *      }
          * }
          */
 
@@ -97,7 +103,7 @@ public class ChartsActivity extends ActionBarActivity {
             xVals.add((int) yVals1.get(i).getVal() + "");
         }*/
 
-        BarDataSet set1 = new BarDataSet(yVals1, "Data set");
+        BarDataSet set1 = new BarDataSet(yVals, "Data set");
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
