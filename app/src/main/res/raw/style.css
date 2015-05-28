@@ -95,7 +95,7 @@ tbody tr:hover {
 }
 
 /* Not needed for sticky header/column functionality */
-td.user-name {
+td.date {
 	text-transform: capitalize;
 }
 .sticky-wrap.overflow-y {

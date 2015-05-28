@@ -14,6 +14,7 @@ public class Course {
     private int end;
     private int distance;
     private DateTime date;
+    private String prettyDate;
 
     public Course() {}
 
@@ -23,6 +24,7 @@ public class Course {
         this.end = end;
         this.distance = end-start;
         this.date = date;
+        this.setPrettyDate();
     }
 
     public Course(int start, int end, DateTime date) {
@@ -30,6 +32,7 @@ public class Course {
         this.end = end;
         this.distance = end-start;
         this.date = date;
+        this.setPrettyDate();
     }
 
     public int getId() { return id; }
@@ -72,6 +75,14 @@ public class Course {
 
     public void setDate(DateTime date) {
         this.date = date;
+    }
+
+    public String getPrettyDate() {
+        return prettyDate;
+    }
+
+    public void setPrettyDate() {
+        this.prettyDate = this.getDateToString();
     }
 
     @Override

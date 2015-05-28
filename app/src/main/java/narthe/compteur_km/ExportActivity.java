@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 import com.itextpdf.text.DocumentException;
 
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -25,8 +27,10 @@ import pdf_export.Main;
 
 public class ExportActivity extends ActionBarActivity {
 
-    Button exportButton;
+    private Button exportButton;
     static DatabaseHandler db;
+    private DatePicker fromDatePicker;
+    private DatePicker toDatePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,8 @@ public class ExportActivity extends ActionBarActivity {
 
     public void initWidgets(){
         this.exportButton = (Button)findViewById(R.id.exportButton);
+        this.fromDatePicker = (DatePicker) findViewById(R.id.fromDatePicker);
+        this.toDatePicker = (DatePicker) findViewById(R.id.toDatePicker);
     }
 
     public void initEvents() {
@@ -54,15 +60,21 @@ public class ExportActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ArrayList <Course> courses = db.getCoursesByPeriod(1, 5, 2015, 31, 5, 2015);
-                        Integer distance = db.getDistanceOnPeriod(1, 5, 2015, 31, 5, 2015);
+                        Integer fromDay = fromDatePicker.getDayOfMonth();
+                        Integer fromMonth = fromDatePicker.getMonth();
+                        Integer fromYear = fromDatePicker.getYear();
+                        Integer toDay = toDatePicker.getDayOfMonth();
+                        Integer toMonth = toDatePicker.getMonth();
+                        Integer toYear = toDatePicker.getYear();
+                        ArrayList <Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
+                        Integer distance = db.getDistanceOnPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
                         FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
                         FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
                         File pdf = null;
                         try {
                             pdf = Main.getPDF(courses,
-                                    "01/05/2015",
-                                    "31/05/2015",
+                                    String.format("%02d-%02d-%d", fromDay, fromMonth, fromYear),
+                                    String.format("%02d-%02d-%d", toDay, toMonth, toYear),
                                     distance,
                                     inputXSL,
                                     inputCSS);

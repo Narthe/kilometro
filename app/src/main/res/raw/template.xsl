@@ -40,19 +40,17 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>id</th>
-                                    <th>start</th>
-                                    <th>end</th>
-                                    <th>distance</th>
+                                    <th>Date</th>
+                                    <th>Distance</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <xsl:for-each select="Courses/Course">
                                     <tr>
-                                        <td class="user-name"><xsl:value-of select="id"/></td>
-                                        <td class="user-email"><xsl:value-of select="start"/></td>
-                                        <td class="user-phone"><xsl:value-of select="end"/></td>
-                                        <td class="user-mobile"><xsl:value-of select="distance"/></td>
+                                        <td class="date"><xsl:value-of select="prettyDate"/></td>
+<!--                                        <td class="user-email"><xsl:value-of select="start"/></td>
+                                        <td class="user-phone"><xsl:value-of select="end"/></td>-->
+                                        <td class="distance"><xsl:value-of select="distance"/></td>
                                     </tr>
                                 </xsl:for-each>
                             </tbody>

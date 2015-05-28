@@ -1,4 +1,4 @@
-Kilometro 
+Kilometro ![alt text](https://travis-ci.org/Narthe/compteur-km.svg "Build status")
 =========
 
 ** Screenshots :**

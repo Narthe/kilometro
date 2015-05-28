@@ -39,11 +39,6 @@ public class Main {
         }
         String dataXML = "<Courses>\n" + startDateXml + endDateXml + distanceXml + coursesXml + "\n</Courses>";
 
-        //String inputXSL = "./templates/template.xsl";
-        //String inputCSS = "./templates/style.css";
-        //String outputxHTML = "./output/output.xhtml";
-        //String outputPDF = "./output/output.pdf";
-
         XmlToHtml st = new XmlToHtml();
         File outputxHTML = File.createTempFile("output", ".xhtml");
         st.transform(dataXML, inputXSL, outputxHTML);
