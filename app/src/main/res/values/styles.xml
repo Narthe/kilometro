@@ -1,9 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:parent="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:background">#ff1a2530</item>
+        <!--<item name="android:background">#ff1a2530</item>-->
     </style>
     <style name="customEditText">
         <!-- Customize your theme here. -->
@@ -16,5 +16,10 @@
         <item name="android:background">@drawable/custom_button</item>
 
         <!--<item name="android:textColor">#FFFFFF</item>-->
+    </style>
+    <style name="customDatePicker" parent="@android:style/Theme.Holo">
+        <!-- Customize your theme here. -->
+        <item name="android:actionMenuTextColor">#ffffff</item>
+        <item name="android:datePickerStyle">@android:style/Widget.DatePicker</item>
     </style>
 </resources>

@@ -35,5 +35,9 @@
     <string name="add">Ajouter</string>
     <string name="exporter">Exporter</string>
     <string name="sendvia">Envoyer via</string>
+    <string name="pick_date">Choisir date</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="from">Du</string>
+    <string name="to">au</string>
 
 </resources>

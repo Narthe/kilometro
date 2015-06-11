@@ -32,12 +32,12 @@ public class CourseListViewActivity extends Activity {
 
         java.util.Date juDate = new Date();
         DateTime dt = new DateTime(juDate);
-        int month = dt.getMonthOfYear();  // where January is 1 and December is 12
-        int year = dt.getYear();
+        Integer month = dt.getMonthOfYear();  // where January is 1 and December is 12
+        Integer year = dt.getYear();
 
         DatabaseHandler db = new DatabaseHandler(this);
         //final ArrayList<Course> list = db.getAllCourses();
-        final ArrayList<Course> courseList = db.getCoursesByMonth(month);
+        final ArrayList<Course> courseList = db.getCoursesByMonth(month, year);
         if (!courseList.isEmpty())
         {
             final ListView listview = (ListView) findViewById(R.id.listview);
