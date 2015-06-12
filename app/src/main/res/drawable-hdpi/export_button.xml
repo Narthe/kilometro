@@ -17,6 +17,6 @@
         <!--android:width="5dp"-->
         <!--android:color="#2f6699"-->
         <!--android:background="@drawable/gradient"/>-->
-    <solid android:color="#34495E"/>
+    <solid android:color="#E74C3C"/>
 
 </shape>

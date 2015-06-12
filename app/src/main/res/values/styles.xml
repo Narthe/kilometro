@@ -11,9 +11,15 @@
 
         <!--<item name="android:textColor">#FFFFFF</item>-->
     </style>
-    <style name="customEditButton">
+    <style name="customButton">
         <!-- Customize your theme here. -->
         <item name="android:background">@drawable/custom_button</item>
+
+        <!--<item name="android:textColor">#FFFFFF</item>-->
+    </style>
+    <style name="exportButton">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/export_button</item>
 
         <!--<item name="android:textColor">#FFFFFF</item>-->
     </style>

@@ -1,6 +1,7 @@
 package narthe.compteur_km;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,18 +9,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
-import java.util.Date;
-import java.util.List;
 
-
-public class AddCourseActivity extends ActionBarActivity {
+public class AddCourseActivity extends Activity {
 
     Button addButton;
     EditText lastRecordEdit;
     EditText newRecordEdit;
+    TextView addCourseTextView;
     static DatabaseHandler db;
 
     @Override
@@ -55,9 +55,16 @@ public class AddCourseActivity extends ActionBarActivity {
     }
 
     public void initWidgets(){
-        this.lastRecordEdit = (EditText)findViewById(R.id.lastRecordEdit);
-        this.newRecordEdit = (EditText)findViewById(R.id.newRecordEdit);
-        this.addButton = (Button)findViewById(R.id.addRunButton);
+        Typeface logoFace = Typeface.createFromAsset(getAssets(),"fonts/Nautilus.otf");
+        lastRecordEdit = (EditText)findViewById(R.id.lastRecordEdit);
+        newRecordEdit = (EditText)findViewById(R.id.newRecordEdit);
+        addCourseTextView = (TextView)findViewById(R.id.addRunLabel);
+        addButton = (Button)findViewById(R.id.addRunButton);
+
+        addButton.setTypeface(logoFace);
+        lastRecordEdit.setTypeface(logoFace);
+        newRecordEdit.setTypeface(logoFace);
+        addCourseTextView.setTypeface(logoFace);
         Course course = db.getLastCourse();
         Log.d("last course end value", Integer.toString(course.getEnd()));
         this.lastRecordEdit.setText(Integer.toString(course.getEnd()));

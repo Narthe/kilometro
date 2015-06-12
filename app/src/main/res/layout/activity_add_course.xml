@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Ajouter un trajet"
+            android:text="@string/add_course"
             android:id="@+id/addRunLabel"
             android:layout_gravity="center_horizontal"
             android:textColor="#34495E" />
@@ -54,16 +54,15 @@
             android:textStyle="bold" />
 
         <Button
-            style="@style/customEditButton"
+            style="@style/customButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/add"
             android:id="@+id/addRunButton"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:textColor="#fffffff8" />
 
     </LinearLayout>
 

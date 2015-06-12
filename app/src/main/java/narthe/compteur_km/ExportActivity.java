@@ -1,16 +1,18 @@
 package narthe.compteur_km;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -19,81 +21,152 @@ import com.itextpdf.text.DocumentException;
 
 import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import narthe.compteur_km.R;
 import pdf_export.Main;
 
+public class ExportActivity extends Activity {
 
-public class ExportActivity extends FragmentActivity {
-
-    private Button exportButton;
     static DatabaseHandler db;
-    int fromYear, fromMonth, fromDay,toYear, toMonth, toDay;
-    DatePickerDialog.OnDateSetListener fromDateListener,toDateListener;
-    static final int DATE_PICKER_TO = 0;
-    static final int DATE_PICKER_FROM = 1;
+
+    private TextView tvDisplayDate, tvDisplayDate2;
+    private DatePicker dpResult;
+
+    private Button btnChangeDate, btnChangeDate2, exportButton;
+
+    private int fromYear, fromMonth, fromDay, toYear, toMonth, toDay;
+    static final int DATE_DIALOG_ID = 1;
+    static final int DATE_DIALOG_ID2 = 2;
+    int cur = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
-        db = new DatabaseHandler(this);
-        /* get the current date */
+        this.initWidgets();
+        this.initEvents();
+        addListenerOnButton();
+
+    }
+
+    public void setFromDate(){
+
+    }
+
+    public void addListenerOnButton() {
+
+        btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
+
+        btnChangeDate.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showDialog(DATE_DIALOG_ID);
+            }
+
+        });
+        btnChangeDate2 = (Button) findViewById(R.id.btnChangeDate2);
+
+        btnChangeDate2.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showDialog(DATE_DIALOG_ID2);
+            }
+
+        });
+
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+
+            case DATE_DIALOG_ID:
+                System.out.println("onCreateDialog  : " + id);
+                cur = DATE_DIALOG_ID;
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener, fromYear, fromMonth, fromDay);
+            case DATE_DIALOG_ID2:
+                cur = DATE_DIALOG_ID2;
+                System.out.println("onCreateDialog2  : " + id);
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener, toYear, toMonth, toDay);
+
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            Integer year = selectedYear;
+            Integer month = selectedMonth;
+            Integer day = selectedDay;
+
+            if(cur == DATE_DIALOG_ID){
+                // set selected date into textview
+                tvDisplayDate.setText("From : " + new StringBuilder().append(day).append("/").append(String.format("%02d", month+1)).append("/").append(year).append(" "));
+                fromDay = day;
+                fromMonth = month + 1;
+                fromYear = year;
+            } else {
+                tvDisplayDate2.setText("To : " + new StringBuilder().append(day).append("/").append(String.format("%02d", month+1)).append("/").append(year).append(" "));
+                toDay = day;
+                toMonth = month + 1;
+                toYear = year;
+            }
+            removeDialog(cur);
+        }
+    };
+    public void initWidgets() {
+        //Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Mission-Script.otf");
+        Typeface logoFace = Typeface.createFromAsset(getAssets(),"fonts/Nautilus.otf");
+
+        exportButton = (Button) findViewById(R.id.exportButton);
+        btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
+        btnChangeDate2 = (Button) findViewById(R.id.btnChangeDate2);
+        exportButton.setTypeface(logoFace);
+        btnChangeDate.setTypeface(logoFace);
+        btnChangeDate2.setTypeface(logoFace);
+
+        tvDisplayDate = (TextView) findViewById(R.id.tvDate);
+        tvDisplayDate2 = (TextView) findViewById(R.id.tvDate2);
+
+        tvDisplayDate.setTypeface(logoFace);
+        tvDisplayDate2.setTypeface(logoFace);
+
         final Calendar c = Calendar.getInstance();
         fromYear = c.get(Calendar.YEAR);
         fromMonth = c.get(Calendar.MONTH);
         fromDay = c.get(Calendar.DAY_OF_MONTH);
-        toYear = c.get(Calendar.YEAR);
-        toMonth = c.get(Calendar.MONTH);
-        toDay = c.get(Calendar.DAY_OF_MONTH);
 
+        toYear = fromYear;
+        toMonth = fromMonth;
+        toDay = fromDay;
+
+        // set current date into textview
+        tvDisplayDate.setText(new StringBuilder()
+                // Month is 0 based, just add 1
+                .append(fromDay).append("/").append(String.format("%02d", fromMonth+1)).append("/")
+                .append(fromYear).append(" "));
+
+        tvDisplayDate2.setText(new StringBuilder()
+                // Month is 0 based, just add 1
+                .append(toDay).append("/").append(String.format("%02d", toMonth+1)).append("/")
+                .append(toYear).append(" "));
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_export, menu);
-        return true;
-    }
-
-    public void initWidgets(){
-        this.exportButton = (Button)findViewById(R.id.exportButton);
-        //this.fromDatePicker = (DatePicker) findViewById(R.id.fromDatePicker);
-        //this.toDatePicker = (DatePicker) findViewById(R.id.toDatePicker);
-    }
-
     public void initEvents() {
-        fromDateListener = new DatePickerDialog.OnDateSetListener(){
-
-            public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-
-            }
-        };
-
-        toDateListener = new DatePickerDialog.OnDateSetListener(){
-            public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-
-            }
-        };
-
         this.exportButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Integer fromDay = fromDatePicker.getDayOfMonth();
-                        Integer fromMonth = fromDatePicker.getMonth();
-                        Integer fromYear = fromDatePicker.getYear();
-                        Integer toDay = toDatePicker.getDayOfMonth();
-                        Integer toMonth = toDatePicker.getMonth();
-                        Integer toYear = toDatePicker.getYear();
-                        ArrayList <Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
+                        ArrayList<Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
                         Integer distance = db.getDistanceOnPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
                         FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
                         FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
@@ -119,37 +192,5 @@ public class ExportActivity extends FragmentActivity {
         shareIntent.setType("application/pdf");
         shareIntent.putExtra(Intent.EXTRA_STREAM, f);
         return shareIntent;
-    }
-
-    public void showFromDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
-    public void showToDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
-
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(int id) {
-            // Use the current date as the default date in the picker
-            switch(id){
-                case ExportActivity.DATE_PICKER_FROM:
-                    return new DatePickerDialog(this, from_dateListener, from_year, from_month, from_day);
-                case DATE_PICKER_TO:
-                    return new DatePickerDialog(this, to_dateListener, to_year, to_month, to_day);
-            }
-            return null;
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-
-        }
     }
 }

@@ -39,5 +39,6 @@
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
     <string name="from">Du</string>
     <string name="to">au</string>
+    <string name="add_course">Ajouter un trajet</string>
 
 </resources>

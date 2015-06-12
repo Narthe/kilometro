@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,35 +13,53 @@
     android:background="#ff1a2530">
 
     <Button
-        android:id="@+id/fromDatePickerButton"
-        android:layout_width="wrap_content"
+        style="@style/customButton"
+        android:id="@+id/btnChangeDate"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/from"
-        android:onClick="showDatePickerDialog" />
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#fffffff8"
+        android:layout_marginBottom="10dp" />
 
-    <TextView android:id="@+id/fromDate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/toDatePickerButton"
+    <TextView
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/to"
-        android:onClick="showDatePickerDialog" />
-
-    <TextView android:id="@+id/toMyDate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#fffffff8"/>
 
     <Button
-        style="@style/customEditButton"
+        style="@style/customButton"
+        android:id="@+id/btnChangeDate2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#fffffff8"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tvDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#fffffff8" />
+
+    <Button
+        style="@style/exportButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/exporter"
         android:id="@+id/exportButton"
         android:layout_marginTop="20dp"
         android:textStyle="bold"
-        android:textSize="25sp" />
+        android:textSize="30sp"
+        android:textColor="#fffffff8" />
 
 </LinearLayout>
