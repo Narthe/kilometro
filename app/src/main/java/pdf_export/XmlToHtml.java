@@ -6,6 +6,7 @@ package pdf_export;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +23,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 public class XmlToHtml {
 
-    public void transform(String dataXML, FileInputStream inputXSL, File outputxHTML) throws IOException, SAXException, ParserConfigurationException, TransformerException
+    public void transform(String dataXML, InputStream inputXSL, File outputxHTML) throws IOException, SAXException, ParserConfigurationException, TransformerException
     //throws TransformerConfigurationException,
     //TransformerException
     {

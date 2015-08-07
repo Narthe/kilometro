@@ -19,19 +19,15 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by jbrasseur on 5/19/15.
  */
 public class HtmlToPDF {
 
-    public static void transform(FileInputStream htmlFile, FileInputStream cssFile, FileOutputStream outputPDF) throws IOException, DocumentException
+    public static void transform(FileInputStream htmlFile, InputStream cssFile, FileOutputStream outputPDF) throws IOException, DocumentException
     {
-        /**
-         * To add CSS see :
-         * https://github.com/valentin-nasta/itext-html-css-pdf-jsf-template/blob/master/iTextHtmlCssPdfJsf/src/main/java/app/SomeBean.java
-         */
-
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, outputPDF);
         document.open();

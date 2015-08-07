@@ -2,15 +2,20 @@ package narthe.compteur_km;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -45,8 +50,9 @@ public class ExportActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+        db = new DatabaseHandler(this);
         this.initWidgets();
-        this.initEvents();
+        //this.initEvents();
         addListenerOnButton();
 
     }
@@ -161,17 +167,20 @@ public class ExportActivity extends Activity {
                 .append(toDay).append("/").append(String.format("%02d", toMonth+1)).append("/")
                 .append(toYear).append(" "));
     }
-    public void initEvents() {
+/*    public void initEvents() {
+        // App crash seems to come from onClick method and not from DataBaseHandler
         this.exportButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // monthes are wrong ---> 05 for June instead of 06
                         ArrayList<Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
-                        Integer distance = db.getDistanceOnPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
-                        FileInputStream inputXSL = (FileInputStream) getResources().openRawResource(R.raw.template);
-                        FileInputStream inputCSS = (FileInputStream) getResources().openRawResource(R.raw.style);
-                        File pdf = null;
-                        try {
+                        //ArrayList<Course> courses = db.getCoursesByPeriod(1, 6, 2015, 30, 6, 2015);
+                        //Integer distance = db.getDistanceOnPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
+                        *//*InputStream inputXSL = getResources().openRawResource(R.raw.template);
+                        InputStream inputCSS = getResources().openRawResource(R.raw.style);*//*
+                        //File pdf = null;
+*//*                        try {
                             pdf = Main.getPDF(courses,
                                     String.format("%02d-%02d-%d", fromDay, fromMonth, fromYear),
                                     String.format("%02d-%02d-%d", toDay, toMonth, toYear),
@@ -180,17 +189,48 @@ public class ExportActivity extends Activity {
                                     inputCSS);
                         } catch (SAXException | TransformerException | IOException | ParserConfigurationException | DocumentException e) {
                             e.printStackTrace();
-                        }
-                        startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
+                        }*//*
+                        //startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
                     }
                 }
         );
+    }*/
+    public void export(View v){
+        Log.d("Export action", "true");
+        // monthes are wrong ---> 05 for June instead of 06
+        //ArrayList<Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
+        ArrayList<Course> courses = db.getCoursesByPeriod(1, 6, 2015, 30, 6, 2015);
+        for (Course course : courses){
+            Log.i("Member name: ", course.toString());
+        }
+        Integer distance = db.getDistanceOnPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
+        InputStream inputXSL = getResources().openRawResource(R.raw.template);
+        InputStream inputCSS = getResources().openRawResource(R.raw.style);
+        File pdf = null;
+
+/*        Context context = MyApplication.getAppContext();
+        File filesDir = context.getFilesDir();
+        Log.d("Files dir", filesDir.getPath());*/
+
+
+        try {
+            pdf = Main.getPDF(courses,
+                    String.format("%02d-%02d-%d", fromDay, fromMonth, fromYear),
+                    String.format("%02d-%02d-%d", toDay, toMonth, toYear),
+                    distance,
+                    inputXSL,
+                    inputCSS);
+        } catch (SAXException | TransformerException | IOException | ParserConfigurationException | DocumentException e) {
+            e.printStackTrace();
+        }
+        startActivity(Intent.createChooser(new Intent(createShareIntent(pdf)), getString(R.string.sendvia)));
     }
 
     private Intent createShareIntent(File f) {
+        Uri fileUri = Uri.fromFile(f);
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("application/pdf");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, f);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
         return shareIntent;
     }
 }
