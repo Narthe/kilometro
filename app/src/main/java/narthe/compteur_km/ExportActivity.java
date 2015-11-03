@@ -198,10 +198,10 @@ public class ExportActivity extends Activity {
     public void export(View v){
         Log.d("Export action", "true");
         // monthes are wrong ---> 05 for June instead of 06
-        //ArrayList<Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
-        ArrayList<Course> courses = db.getCoursesByPeriod(1, 6, 2015, 30, 6, 2015);
+        ArrayList<Course> courses = db.getCoursesByPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
+        //ArrayList<Course> courses = db.getCoursesByPeriod(1, 9, 2015, 31, 9, 2015);
         for (Course course : courses){
-            Log.i("Member name: ", course.toString());
+            Log.i("Course: ", course.toString());
         }
         Integer distance = db.getDistanceOnPeriod(fromDay, fromMonth, fromYear, toDay, toMonth, toYear);
         InputStream inputXSL = getResources().openRawResource(R.raw.template);

@@ -43,6 +43,7 @@ public class Main {
             coursesXml+= ObjectToXml.serializeCourse(course) + "\n";
         }
         String dataXML = "<Courses>\n" + startDateXml + endDateXml + distanceXml + coursesXml + "\n</Courses>";
+        Log.d("coursesXML", dataXML);
 
         XmlToHtml st = new XmlToHtml();
         File outputxHTML = File.createTempFile("output", ".xhtml");

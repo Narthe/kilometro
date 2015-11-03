@@ -47,10 +47,10 @@
                             <tbody>
                                 <xsl:for-each select="Courses/Course">
                                     <tr>
-                                        <td class="date"><xsl:value-of select="prettyDate"/></td>
+                                        <td class="date"><xsl:value-of select="date"/></td>
 <!--                                        <td class="user-email"><xsl:value-of select="start"/></td>
                                         <td class="user-phone"><xsl:value-of select="end"/></td>-->
-                                        <td class="distance"><xsl:value-of select="distance"/></td>
+                                        <td class="distance"><xsl:value-of select="distance"/> km</td>
                                     </tr>
                                 </xsl:for-each>
                             </tbody>

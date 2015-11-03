@@ -3,6 +3,7 @@ package narthe.compteur_km;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,11 +25,16 @@ import java.util.Date;
 
 public class CourseListViewActivity extends Activity {
 
+    ListView listview = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list_view);
         JodaTimeAndroid.init(this);
+
+        /*LV = (ListView) findViewById(R.id.listview);
+        LV.setBackgroundColor(Color.parseColor("#34495E"));*/
 
         java.util.Date juDate = new Date();
         DateTime dt = new DateTime(juDate);
@@ -40,7 +46,7 @@ public class CourseListViewActivity extends Activity {
         final ArrayList<Course> courseList = db.getCoursesByMonth(month, year);
         if (!courseList.isEmpty())
         {
-            final ListView listview = (ListView) findViewById(R.id.listview);
+            this.listview = (ListView) findViewById(R.id.listview);
             Resources res = getResources();
             final ListViewAdapter adapter = new ListViewAdapter(this, courseList, res);
             listview.setAdapter(adapter);
@@ -97,5 +103,18 @@ public class CourseListViewActivity extends Activity {
             return true;
         }
 
+    }
+
+    public void initEvents(){
+        this.lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent intent = new Intent(MainActivity.this, SendMessage.class);
+                String message = "abc";
+                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
+            }
+        });
     }
 }
