@@ -75,7 +75,9 @@ public class CourseListViewActivity extends Activity {
                 return true;
             case R.id.modify_id:
                 // Start edit activity
-                
+                Intent i = new Intent(getApplicationContext(), EditCourseActivity.class);
+                i.putExtra("course_to_edit", course);
+                startActivity(i);
                 adapter.notifyDataSetChanged();
                 return true;
             default:
