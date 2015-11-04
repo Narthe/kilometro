@@ -33,9 +33,6 @@ public class CourseListViewActivity extends Activity {
         setContentView(R.layout.activity_course_list_view);
         JodaTimeAndroid.init(this);
 
-        /*LV = (ListView) findViewById(R.id.listview);
-        LV.setBackgroundColor(Color.parseColor("#34495E"));*/
-
         java.util.Date juDate = new Date();
         DateTime dt = new DateTime(juDate);
         Integer month = dt.getMonthOfYear();  // where January is 1 and December is 12
@@ -50,34 +47,63 @@ public class CourseListViewActivity extends Activity {
             Resources res = getResources();
             final ListViewAdapter adapter = new ListViewAdapter(this, courseList, res);
             listview.setAdapter(adapter);
+            registerForContextMenu(this.listview);
         }
         else{
             Log.d("Courses list", "courses list is empty");
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_course_list_view, menu);
-        return true;
+    Override
+    public boolean onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_context_menu, menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    
+    Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.delete_id:
+                this.listview.remove(info.position);
+                adapter.notifyDataSetChanged();
+                
+                // Delete course from databse here
+                // db.deleteCourse(course);
+                
+                return true;
+            case R.id.modify_id:
+                // Start edit activity
+                
+                adapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+    // @Override
+    // public boolean onCreateOptionsMenu(Menu menu) {
+    //     // Inflate the menu; this adds items to the action bar if it is present.
+    //     getMenuInflater().inflate(R.menu.menu_course_list_view, menu);
+    //     return true;
+    // }
+
+    // @Override
+    // public boolean onOptionsItemSelected(MenuItem item) {
+    //     // Handle action bar item clicks here. The action bar will
+    //     // automatically handle clicks on the Home/Up button, so long
+    //     // as you specify a parent activity in AndroidManifest.xml.
+    //     int id = item.getItemId();
+
+    //     //noinspection SimplifiableIfStatement
+    //     if (id == R.id.action_settings) {
+    //         return true;
+    //     }
+
+    //     return super.onOptionsItemSelected(item);
+    // }
 
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -103,18 +129,5 @@ public class CourseListViewActivity extends Activity {
             return true;
         }
 
-    }
-
-    public void initEvents(){
-        this.lv.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Intent intent = new Intent(MainActivity.this, SendMessage.class);
-                String message = "abc";
-                intent.putExtra(EXTRA_MESSAGE, message);
-                startActivity(intent);
-            }
-        });
     }
 }
