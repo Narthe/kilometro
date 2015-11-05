@@ -27,6 +27,9 @@
     <string name="export_action">Exporter en PDF</string>
     <string name="stats_action">Voir les statistiques</string>
     <string name="title_activity_export">ExportActivity</string>
+    
+    <string name="bad_values_alert_dialog_title">Mauvaises valeurs</string>
+    <string name="bad_values_alert_dialog_message">Le kilometrage d'arrivee est inferieur au kilometrage de depart.</string>
 
     <string name="wip">Cette page est en cours de construction !</string>
     <string name="title_activity_charts">ChartsActivity</string>

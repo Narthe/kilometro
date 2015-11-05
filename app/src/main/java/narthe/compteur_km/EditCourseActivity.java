@@ -86,10 +86,29 @@ public class EditCourseActivity extends Activity {
                         }
                         else
                         {
+                            BadValuesDialogFragment dialog = new BadValuesDialogFragment();
+                            dialog.show();
                             System.out.println("Compteur d'arrivée inférieur au compteur de départ");
                         }
                     }
                 }
         );
+    }
+    
+    public class BadValuesDialogFragment extends DialogFragment {
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.bad_values_alert_dialog_message)
+               .setTitle(R.string.bad_values_alert_dialog_title)
+               .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       // Do nothing
+                   }
+               })
+               });
+        // Create the AlertDialog object and return it
+        return builder.create();
     }
 }
