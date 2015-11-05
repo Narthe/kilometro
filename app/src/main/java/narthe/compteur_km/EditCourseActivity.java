@@ -80,9 +80,16 @@ public class EditCourseActivity extends Activity {
                         Integer start = Integer.parseInt(start_str);
                         Integer end = Integer.parseInt(end_str);
                         if(end > start) {
-                            Course course = new Course(start, end, new DateTime());
-                            System.out.println(course.toString());
-                            EditCourseActivity.db.updateCourse(course);
+                            try {
+                                Course course = new Course(start, end, new DateTime());
+                                System.out.println(course.toString());
+                                EditCourseActivity.db.updateCourse(course);
+                                SuccessDialogFragment dialog = new SuccessDialogFragment();
+                                dialog.show();
+                            } catch(Exception e) {
+                                System.out.println(e)
+                            } finally {
+                            }
                         }
                         else
                         {
@@ -103,11 +110,30 @@ public class EditCourseActivity extends Activity {
         builder.setMessage(R.string.bad_values_alert_dialog_message)
                .setTitle(R.string.bad_values_alert_dialog_title)
                .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int id) {
-                       // Do nothing
-                   }
-               })
-               });
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Do nothing
+                    }
+                })
+                });
+        // Create the AlertDialog object and return it
+        return builder.create();
+    }
+    
+    public class SuccessDialogFragment extends DialogFragment {
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.edit_success_alert_dialog_message)
+               .setTitle(R.string.edit_success_alert_dialog_title)
+               .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Start CourseListViewActivity
+                        Intent intent = new Intent(this, CourseListViewActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                });
         // Create the AlertDialog object and return it
         return builder.create();
     }

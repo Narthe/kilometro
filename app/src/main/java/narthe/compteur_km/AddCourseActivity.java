@@ -83,15 +83,16 @@ public class AddCourseActivity extends Activity {
                             Log.v("last record : ", start_str);
                             Log.v("new record : ", end_str);
 
-                            Course course = new Course(start, end, new DateTime());
-                            System.out.println(course.toString());
-                            AddCourseActivity.db.addCourse(course);
+                            try {
+                                Course course = new Course(start, end, new DateTime());
+                                System.out.println(course.toString());
+                                AddCourseActivity.db.addCourse(course);
+                                SuccessDialogFragment dialog = new SuccessDialogFragment();
+                                dialog.show();
+                            } catch(Exception e) {
+                                System.out.println(e)
+                            }
 
-                            //List<Course> courses = db.getAllCourses();
-
-                            //for (Course c : courses) {
-                                //System.out.println(cn.toString());
-                            //}
                         }
                         else
                         {
@@ -106,17 +107,36 @@ public class AddCourseActivity extends Activity {
     
     public class BadValuesDialogFragment extends DialogFragment {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.bad_values_alert_dialog_message)
-               .setTitle(R.string.bad_values_alert_dialog_title)
-               .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int id) {
-                       // Do nothing
-                   }
-               })
-               });
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.bad_values_alert_dialog_message)
+                   .setTitle(R.string.bad_values_alert_dialog_title)
+                   .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                           // Do nothing
+                       }
+           })
+       });
+        // Create the AlertDialog object and return it
+        return builder.create();
+    }
+    
+    public class SuccessDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.add_success_alert_dialog_message)
+                   .setTitle(R.string.add_success_alert_dialog_title)
+                   .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Start CourseListViewActivity
+                            Intent intent = new Intent(this, CourseListViewActivity.class);
+                            startActivity(intent);
+                        }
+            })
+        });
         // Create the AlertDialog object and return it
         return builder.create();
     }
